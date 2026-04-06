@@ -33,6 +33,13 @@ function parseDate(dateStr: string): Date | null {
   return isNaN(d.getTime()) ? null : d;
 }
 
+function extractOpeningFromUrl(url?: string): string | null {
+  if (!url) return null;
+  const match = url.match(/\/openings\/(.+?)(?:\?|$)/);
+  if (!match) return null;
+  return match[1].replace(/-/g, ' ').replace(/\.\.\./g, '…');
+}
+
 function normalizeResult(r: string): GameResult {
   if (r === '1-0') return '1-0';
   if (r === '0-1') return '0-1';
@@ -69,7 +76,7 @@ export function parsePGN(pgnText: string, playerName?: string): ParsedGame[] {
     const dateStr = headers.Date || headers.UTCDate || null;
     const dateObj = dateStr ? parseDate(dateStr) : null;
     const tc = headers.TimeControl || '';
-    const opening = headers.Opening || headers.ECO || 'Unknown';
+    const opening = headers.Opening || extractOpeningFromUrl(headers.ECOUrl) || headers.ECO || 'Unknown';
     const eco = headers.ECO || '';
 
     const game: ParsedGame = {
