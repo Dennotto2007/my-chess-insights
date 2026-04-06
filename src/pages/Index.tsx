@@ -9,6 +9,7 @@ import { RatingChart } from '@/components/dashboard/RatingChart';
 import { TimeControlChart } from '@/components/dashboard/TimeControlChart';
 import { OpeningsTable } from '@/components/dashboard/OpeningsTable';
 import { CoachingSection } from '@/components/dashboard/CoachingSection';
+import { GameHistory } from '@/components/dashboard/GameHistory';
 import { PGNImporter } from '@/components/dashboard/PGNImporter';
 import { Button } from '@/components/ui/button';
 
@@ -84,6 +85,7 @@ export default function Index() {
             </div>
 
             <OpeningsTable games={filteredGames} />
+            <GameHistory games={filteredGames} />
             <CoachingSection games={filteredGames} />
           </>
         )}
